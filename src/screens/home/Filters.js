@@ -19,6 +19,9 @@ const Filters = () => {
     const [movieGener, setMovieGener] = useState([]);
     const [selectedGener, setSelectedGener] = useState([]);
     const [movieArtist, setMovieArtist] = useState([]);
+    const [selectedArtist, setSelectedArtist] = useState([]);
+    const [releaseDateStart, setReleaseDateStart] = useState("");
+    const [releaseDateEnd, setReleaseDateEnd] = useState("");
     let data = [];
 
     useEffect(() => {
@@ -28,7 +31,9 @@ const Filters = () => {
                 );
                 const json = await response.json();
                 data = await json.genres;
-        setMovieGener(data);
+                
+        setMovieGener(data.map((g) => g.genre));
+        
       }
       fetchGenreData();
     }, []);
@@ -40,15 +45,21 @@ const Filters = () => {
              );
              const json = await response.json();
              data = await json.artists;
-            setMovieArtist(data);
+            setMovieArtist(data.map(a=>`${a.first_name} ${a.last_name}`));
           }
           fetchArtistData();
         }, []);
 
-         const handleChange = (event) => {
-           setSelectedGener(event.target.value);
+        const handleMovieChange = (event) => {
+            setMoviesName(event.target.value);
          };
 
+         const handleGenreChange = (event) => {
+           setSelectedGener(event.target.value);
+         };
+         const handleArtistChange = (event) => {
+         setSelectedArtist(event.target.value);
+         };
 
     return (
       <Card>
@@ -56,7 +67,11 @@ const Filters = () => {
         <CardContent>
           <FormControl style={{ width: "100%" }}>
             <InputLabel htmlFor="my-input">Movie Name</InputLabel>
-            <Input id="my-input" value={movieName} />
+            <Input
+              id="my-input"
+              value={movieName}
+              onChange={handleMovieChange}
+            />
           </FormControl>
           <FormControl style={{ width: "100%" }}>
             <InputLabel htmlFor="my-input">Geners</InputLabel>
@@ -65,38 +80,57 @@ const Filters = () => {
               multiple
               value={selectedGener}
               input={<Input />}
-              onChange={handleChange}
+              renderValue={(selected) => selected.join(", ")}
+              onChange={handleGenreChange}
             >
               {movieGener.map((name) => (
-                <MenuItem key={name.genre} value={name.genre}>
-                  <Checkbox checked={selectedGener.indexOf(name.genre) > -1} />
-                  <ListItemText primary={name.genre} />
+                <MenuItem key={name} value={name}>
+                  <Checkbox checked={selectedGener.indexOf(name) > -1} />
+                  <ListItemText primary={name} />
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
           <FormControl style={{ width: "100%" }}>
             <InputLabel htmlFor="my-input">Artists</InputLabel>
-            <Select id="artist-simple-select" multiple value={movieArtist}>
+            <Select
+              id="artist-simple-select"
+              multiple
+              value={selectedArtist}
+              input={<Input />}
+              renderValue={(selected) => selected.join(", ")}
+              onChange={handleArtistChange}
+            >
               {movieArtist.map((name) => (
-                <MenuItem key={name.first_name} value={name.first_name}>
-                  <Checkbox />
-                  {`${name.first_name} ${name.last_name}`}
+                <MenuItem key={name} value={name}>
+                  <Checkbox checked={selectedArtist.indexOf(name) > -1} />
+                  <ListItemText primary={name} />
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
           <FormControl style={{ width: "100%" }}>
-            <InputLabel htmlFor="my-input" shrink>
-              Release Date Start
-            </InputLabel>
-            <TextField type="date" id="my-input" value={movieName} />
+            <TextField
+              label="Release Date Start"
+              type="date"
+              id="startdate"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              value={releaseDateStart}
+              
+            />
           </FormControl>
           <FormControl style={{ width: "100%" }}>
-            <InputLabel htmlFor="my-input" shrink>
-              Release Date End
-            </InputLabel>
-            <TextField type="date" id="my-input" value={movieName} />
+            <TextField
+              label="Release Date End"
+              type="date"
+              id="enddate"
+              InputLabelProps={{
+                shrink: true,
+              }}
+              value={releaseDateEnd}
+            />
           </FormControl>
           <FormControl style={{ width: "100%", padding: "10px 0px" }}>
             <Button variant="contained" color="primary">
