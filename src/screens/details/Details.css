@@ -1,0 +1,28 @@
+.back{
+    margin-left: 24px;
+    margin-top: 8px;
+    margin-bottom: 0px;
+    height: 24px;
+}
+
+.details{
+    display: flex;
+    width: 100%;
+}
+
+.left{
+    
+    width: 20%;
+    margin-left: 24px;
+}
+
+.middle{
+    width: 60%;
+}
+
+.right{
+    width: 20%;
+    
+}
+
+

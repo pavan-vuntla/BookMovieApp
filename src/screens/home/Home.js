@@ -22,9 +22,13 @@ const Home = (props) => {
    }
    fetchData();
    },[]);
+
+   const movieDetailsHandler=(e,details={...props})=>{
+     props.history.push("/movie/" + details.id,details);
+
+   }
    
   return (
-
     <div>
       <Header hideBookShow={true} {...props} />
       <h3>Upcoming Movies</h3>
@@ -42,6 +46,7 @@ const Home = (props) => {
               style={{
                 height: "250px",
               }}
+              onClick={(e) => movieDetailsHandler(e, movie)}
             >
               <img
                 margin="auto"
@@ -57,22 +62,28 @@ const Home = (props) => {
       <div style={{ width: "100%", display: "flex" }}>
         <div style={{ width: "76%", margin: "16px" }}>
           <GridList cellHeight="350" cols={4}>
-            {poster.map((movie) => (
-              <GridListTile key={movie.id} style={{ padding: "10px" }}>
-                <img margin="auto" src={movie.poster_url} alt={movie.title} />
-                <GridListTileBar
-                  title={movie.title}
-                  subtitle={
-                    <span>
-                      Release Date:
-                      {moment(new Date(movie.release_date)).format(
-                        "ddd MMM D Y"
-                      )}
-                    </span>
-                  }
-                />
-              </GridListTile>
-            ))}
+            {poster
+              .filter((s) => (s.status === "RELEASED"))
+              .map((movie) => (
+                <GridListTile
+                  key={movie.id}
+                  style={{ padding: "10px" }}
+                  onClick={(e) => movieDetailsHandler(e, movie)}
+                >
+                  <img margin="auto" src={movie.poster_url} alt={movie.title} />
+                  <GridListTileBar
+                    title={movie.title}
+                    subtitle={
+                      <span>
+                        Release Date:
+                        {moment(new Date(movie.release_date)).format(
+                          "ddd MMM D Y"
+                        )}
+                      </span>
+                    }
+                  />
+                </GridListTile>
+              ))}
           </GridList>
         </div>
         <div style={{ width: "24%", margin: "16px" }}>
