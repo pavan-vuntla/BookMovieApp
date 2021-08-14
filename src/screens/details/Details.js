@@ -8,6 +8,8 @@ import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
 import GridListTileBar from "@material-ui/core/GridListTileBar";
 import YouTube from "react-youtube";
+import StarRating from "../../common/rating/Rating";
+
 
 const styles = () => ({
   emptyStar: {
@@ -34,8 +36,7 @@ function Details(props) {
   const { classes } = props;
 
   const opts = {
-    height: "390",
-    width: "640",
+    
     playerVars: {
       // https://developers.google.com/youtube/player_parameters
       autoplay: 0,
@@ -92,19 +93,15 @@ function Details(props) {
           <Typography className={classes.marginTop16}>
             <strong>Trailer: </strong>
           </Typography>
-          <YouTube videoId={videoId} opts={opts} host= 'https://www.youtube.com' onReady={VideoOnReady} />;
+          <YouTube videoId={videoId[0]} opts={opts} host= 'https://www.youtube.com' onReady={VideoOnReady} />;
         </div>
         <div className="right">
           <Typography>
             <strong>Rate this movie:</strong>
           </Typography>
 
-          <Typography>
-            <StarBorderIcon fontSize="inherit" className={classes.emptyStar} />
-            <StarBorderIcon fontSize="inherit" className={classes.emptyStar} />
-            <StarBorderIcon fontSize="inherit" className={classes.emptyStar} />
-            <StarBorderIcon fontSize="inherit" className={classes.emptyStar} />
-            <StarBorderIcon fontSize="inherit" className={classes.emptyStar} />
+          <Typography style={{width:"120px"}}>
+            <StarRating />
           </Typography>
           <Typography className={classes.artistMargin}>
             <strong>Artists:</strong>

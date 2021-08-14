@@ -8,6 +8,9 @@ import "./Home.css";
 import Filters from './Filters'
 import moment from 'moment'
 
+
+
+
 const Home = (props) => {
     let data = [];
     const[poster,setPoster]=useState([]);
@@ -22,6 +25,18 @@ const Home = (props) => {
    }
    fetchData();
    },[]);
+
+             async function fetchFilterData(filterURL) {
+               console.log(filterURL);
+             const response = await fetch(
+               filterURL
+             );
+             const json = await response.json();
+             data = await json.movies;
+             setPoster(data);
+             
+            
+          }
 
    const movieDetailsHandler=(e,details={...props})=>{
      props.history.push("/movie/" + details.id,details);
@@ -87,7 +102,7 @@ const Home = (props) => {
           </GridList>
         </div>
         <div style={{ width: "24%", margin: "16px" }}>
-          <Filters />
+          <Filters handleFilter={fetchFilterData}/>
         </div>
       </div>
     </div>

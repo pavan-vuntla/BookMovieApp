@@ -1,0 +1,12 @@
+.star-rating {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.selected {
+  color: yellow;
+}
+
+.star{
+  color:black;
+}

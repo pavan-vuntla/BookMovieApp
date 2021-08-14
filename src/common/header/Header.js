@@ -14,15 +14,12 @@ const styles = () => ({
   }
 });
 
-const Header = (props, { hideBookShow }) => {
+const Header = (props) => {
   const [openModal, setOpenModal] = useState(false);
   const loginHandler = () => {
-    var url_string = window.location.href;
-    var url = new URL(url_string);
-    var c = url.searchParams.get("id");
-    console.log(c);
     setOpenModal(true);
   };
+  
   const bookShowHandler = () => {
     console.log(props);
     props.history.push("/bookshow/1234");
@@ -34,10 +31,15 @@ const Header = (props, { hideBookShow }) => {
       <div className="header">
         <img src={logo} alt="logo" className="logo" />
         <div>
-          {hideBookShow?
-          <Button variant="contained" color="primary" onClick={bookShowHandler}>
-            Book Show
-          </Button>:null}
+          {props.hideBookShow ?  null : (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={bookShowHandler}
+            >
+              Book Show
+            </Button>
+          ) }
           <Button
             variant="contained"
             className={classes.login}

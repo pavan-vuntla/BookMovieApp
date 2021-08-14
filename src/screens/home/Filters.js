@@ -11,10 +11,23 @@ import Checkbox from "@material-ui/core/Checkbox";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import ListItemText from "@material-ui/core/ListItemText";
+import { withStyles } from "@material-ui/core/styles";
+import moment from 'moment'
+
+const styles = (theme) => ({
+  cardComponent: {
+    margin: theme.spacing.unit,
+    minWidth: "240px",
+    maxWidth: "240px",
+  },
+
+  findMovie: {
+    color: theme.palette.primary.light,
+  },
+});
 
 
-
-const Filters = () => {
+const Filters = (props) => {
     const[movieName,setMoviesName]=useState('');
     const [movieGener, setMovieGener] = useState([]);
     const [selectedGener, setSelectedGener] = useState([]);
@@ -23,6 +36,8 @@ const Filters = () => {
     const [releaseDateStart, setReleaseDateStart] = useState("");
     const [releaseDateEnd, setReleaseDateEnd] = useState("");
     let data = [];
+
+
 
     useEffect(() => {
       async function fetchGenreData() {
@@ -50,6 +65,14 @@ const Filters = () => {
           fetchArtistData();
         }, []);
 
+        const filterClickHandler =()=>{
+          console.log(movieName, selectedArtist, selectedGener,releaseDateStart,releaseDateEnd);
+        const filterURL=`http://localhost:8085/api/v1/movies?genre=${selectedGener.join(",")}&title=${movieName}&artists=${selectedArtist.join(",")}&start_date=${releaseDateStart}&end_date=${releaseDateEnd}`;
+        props.handleFilter(filterURL);
+
+        console.log(filterURL);
+        }
+
         const handleMovieChange = (event) => {
             setMoviesName(event.target.value);
          };
@@ -61,11 +84,24 @@ const Filters = () => {
          setSelectedArtist(event.target.value);
          };
 
+         const dateChangeHandler=(e,type)=>{
+           const releaseDate=e.target.value;
+           const convertedReleaseDate =new Date(releaseDate);
+           console.log(releaseDate)
+           type==="startdate"?setReleaseDateStart(releaseDate):setReleaseDateEnd(releaseDate);
+
+         }
+
+         const { classes } = props;
+
     return (
       <Card>
-        <CardHeader title="FIND MOVIES BY:" />
+        <CardHeader
+          classes={{ title: classes.findMovie }}
+          title="FIND MOVIES BY:"
+        />
         <CardContent>
-          <FormControl style={{ width: "100%" }}>
+          <FormControl className={classes.cardComponent}>
             <InputLabel htmlFor="my-input">Movie Name</InputLabel>
             <Input
               id="my-input"
@@ -73,7 +109,7 @@ const Filters = () => {
               onChange={handleMovieChange}
             />
           </FormControl>
-          <FormControl style={{ width: "100%" }}>
+          <FormControl className={classes.cardComponent}>
             <InputLabel htmlFor="my-input">Geners</InputLabel>
             <Select
               id="genre-simple-select"
@@ -91,7 +127,7 @@ const Filters = () => {
               ))}
             </Select>
           </FormControl>
-          <FormControl style={{ width: "100%" }}>
+          <FormControl className={classes.cardComponent}>
             <InputLabel htmlFor="my-input">Artists</InputLabel>
             <Select
               id="artist-simple-select"
@@ -109,7 +145,7 @@ const Filters = () => {
               ))}
             </Select>
           </FormControl>
-          <FormControl style={{ width: "100%" }}>
+          <FormControl className={classes.cardComponent}>
             <TextField
               label="Release Date Start"
               type="date"
@@ -118,10 +154,11 @@ const Filters = () => {
                 shrink: true,
               }}
               value={releaseDateStart}
-              
+              onChange={(e)=>dateChangeHandler(e,"startdate")}
+              format="dd-mm-yyyy"
             />
           </FormControl>
-          <FormControl style={{ width: "100%" }}>
+          <FormControl className={classes.cardComponent}>
             <TextField
               label="Release Date End"
               type="date"
@@ -130,10 +167,11 @@ const Filters = () => {
                 shrink: true,
               }}
               value={releaseDateEnd}
+              onChange={(e)=>dateChangeHandler(e,"enddate")}
             />
           </FormControl>
-          <FormControl style={{ width: "100%", padding: "10px 0px" }}>
-            <Button variant="contained" color="primary">
+          <FormControl className={classes.cardComponent}>
+            <Button variant="contained" color="primary" onClick={filterClickHandler}>
               APPLY
             </Button>
           </FormControl>
@@ -142,4 +180,4 @@ const Filters = () => {
     );
 }
  
-export default Filters;
+export default withStyles(styles)(Filters);
