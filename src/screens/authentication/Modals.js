@@ -50,7 +50,7 @@ useEffect(() => {console.log(props.modalState);
 }, [props.modalState]);
 
       const closeModalHandler=()=>{
-        setOpenModal(false);
+        props.handleModal();
         console.log(props)
 
       }

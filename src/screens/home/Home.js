@@ -13,7 +13,8 @@ import moment from 'moment'
 
 const Home = (props) => {
     let data = [];
-    const[poster,setPoster]=useState([]);
+    const[upcomingPoster,setUpcomingPoster]=useState([]);
+    const[releasedPoster,setReleasedPoster]=useState([]);
     useEffect(() =>{
     async function fetchData() {
     const response = await fetch(
@@ -21,7 +22,8 @@ const Home = (props) => {
     );
     const json = await response.json();
     data = await json.movies;
-    setPoster(data);
+    setUpcomingPoster(data);
+    setReleasedPoster(data);
    }
    fetchData();
    },[]);
@@ -33,7 +35,7 @@ const Home = (props) => {
              );
              const json = await response.json();
              data = await json.movies;
-             setPoster(data);
+             setReleasedPoster(data);
              
             
           }
@@ -55,7 +57,7 @@ const Home = (props) => {
           xs={12}
           style={{ display: "flex", flexDirection: "column" }}
         >
-          {poster.map((movie) => (
+          {upcomingPoster.map((movie) => (
             <GridListTile
               key={movie.id}
               style={{
@@ -77,7 +79,7 @@ const Home = (props) => {
       <div style={{ width: "100%", display: "flex" }}>
         <div style={{ width: "76%", margin: "16px" }}>
           <GridList cellHeight="350" cols={4}>
-            {poster
+            {releasedPoster
               .filter((s) => (s.status === "RELEASED"))
               .map((movie) => (
                 <GridListTile

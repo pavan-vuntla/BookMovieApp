@@ -66,11 +66,9 @@ const Filters = (props) => {
         }, []);
 
         const filterClickHandler =()=>{
-          console.log(movieName, selectedArtist, selectedGener,releaseDateStart,releaseDateEnd);
         const filterURL=`http://localhost:8085/api/v1/movies?genre=${selectedGener.join(",")}&title=${movieName}&artists=${selectedArtist.join(",")}&start_date=${releaseDateStart}&end_date=${releaseDateEnd}`;
         props.handleFilter(filterURL);
 
-        console.log(filterURL);
         }
 
         const handleMovieChange = (event) => {

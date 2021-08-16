@@ -24,6 +24,10 @@ const Header = (props) => {
     console.log(props);
     props.history.push("/bookshow/1234");
   };
+
+  const updateModalHandler=()=>{
+    setOpenModal(false);
+  }
   const { classes } = props;
 
   return (
@@ -47,7 +51,7 @@ const Header = (props) => {
           >
             Login
           </Button>
-          <Modals modalState={openModal} />
+          <Modals handleModal={updateModalHandler} modalState={openModal} />
         </div>
       </div>
     </div>
