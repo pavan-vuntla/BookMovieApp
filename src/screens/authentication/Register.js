@@ -4,33 +4,80 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
+import { withStyles } from "@material-ui/core/styles";
 
-const Register = () => {
+const styles = () => ({
+  alignItem: {
+     display: "flex",
+    alignItems: "center",
+    flexDirection: "column",
+  }
+});
+
+const Register = (props) => {
   const [firstName, setfirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [contact, setContact] = useState("");
+  const [registrationMessage,setRegistrationMessage] =useState("");
   const [reqfirstName, setReqfirstName] = useState("dispNone");
   const [reqLastName, setReqLastName] = useState("dispNone");
   const [reqPassword, setReqPassword] = useState("dispNone");
   const [reqEmail, setReqEmail] = useState("dispNone");
   const [reqContact, setReqContact] = useState("dispNone");
-  const registerHandler = () => {
+
+  const { classes } = props;
+  const registerHandler = (e) => {
     firstName === ""? setReqfirstName("dispBlock"): setReqfirstName("dispNone");
     lastName === "" ? setReqLastName("dispBlock") : setReqLastName("dispNone");
     password === "" ? setReqPassword("dispBlock") : setReqPassword("dispNone");
     email === "" ? setReqEmail("dispBlock") : setReqEmail("dispNone");
     contact === "" ? setReqContact("dispBlock") : setReqContact("dispNone");
+    console.log(firstName, lastName,email,password,contact);
+    
+    if (
+      firstName === "" ||
+      lastName === "" ||
+      password === "" ||
+      email === "" ||
+      contact === ""
+    ) {
+      return;
+    }
+    const body = JSON.stringify({
+        email_address: email,
+        first_name: firstName,
+        last_name: lastName,
+        mobile_number: contact,
+        password: password});
+
+        fetch("http://localhost:8085/api/v1/signup", {
+           method: "POST",
+           headers: {
+              "Content-Type": "application/json;charset=UTF-8",
+              accept: "application/json",
+           },
+           body:body
+           }).then((response) => response.json() )
+      .then((data) => {
+        if(data.code==="USR-009"){
+        setRegistrationMessage(data.message);
+        }
+        else{
+          setRegistrationMessage("Registration Successful. Please Login!");
+        }
+        
+      });
   };
   return (
-    <form>
+    <form className={classes.alignItem}>
       <FormControl>
-        <InputLabel htmlFor="my-input" required={true}>
+        <InputLabel htmlFor="my-firstName" required={true}>
           First Name
         </InputLabel>
         <Input
-          id="my-input"
+          id="my-firstName"
           value={firstName}
           required
           onChange={(e) => {
@@ -43,11 +90,11 @@ const Register = () => {
       </FormControl>
       <br />
       <FormControl>
-        <InputLabel htmlFor="my-input" required={true}>
+        <InputLabel htmlFor="my-lastName" required={true}>
           Last Name
         </InputLabel>
         <Input
-          id="my-input"
+          id="my-lastName"
           value={lastName}
           required
           onChange={(e) => {
@@ -60,11 +107,11 @@ const Register = () => {
       </FormControl>
       <br />
       <FormControl>
-        <InputLabel htmlFor="my-input" required={true}>
+        <InputLabel htmlFor="my-email" required={true}>
           Email
         </InputLabel>
         <Input
-          id="my-input"
+          id="my-email"
           value={email}
           required
           onChange={(e) => {
@@ -77,10 +124,11 @@ const Register = () => {
       </FormControl>
       <br />
       <FormControl>
-        <InputLabel htmlFor="my-password" required={true}>
+        <InputLabel  htmlFor="my-password" required={true}>
           Password
         </InputLabel>
         <Input
+          type="password"
           id="my-password"
           value={password}
           required
@@ -110,14 +158,17 @@ const Register = () => {
         </FormHelperText>
       </FormControl>
       <br />
-      <br />
+      
+      <FormHelperText>{registrationMessage}<br /></FormHelperText>
+      
       <FormControl>
         <Button variant="contained" color="primary" onClick={registerHandler}>
           Register
         </Button>
       </FormControl>
+
     </form>
   );
 };
 
-export default Register;
+export default withStyles(styles)(Register);

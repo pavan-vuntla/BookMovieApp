@@ -35,7 +35,8 @@ const BookShow = (props) => {
 
   useEffect(() => {
     let dataShows = null;
-
+    
+    console.log("BookShow",props.location);
     fetch(props.baseUrl + "movies/" + props.match.params.id + "/shows", {
       method: "GET",
       headers: {
@@ -165,6 +166,7 @@ const BookShow = (props) => {
     ) {
       return;
     }
+ 
 
     props.history.push({
       pathname: "/confirm/" + props.match.params.id,
@@ -196,7 +198,10 @@ const BookShow = (props) => {
       <Header baseUrl={props.baseUrl} />
       <div className="bookShow">
         <Typography className="back">
-          <Link to={"/movie/" + props.match.params.id}>
+          <Link to={{
+             pathname:"/movie/" + props.match.params.id,
+             state:props.location.state
+            }}>
             &#60; Back to Movie Details
           </Link>
         </Typography>

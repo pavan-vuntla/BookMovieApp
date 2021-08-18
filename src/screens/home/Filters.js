@@ -12,7 +12,7 @@ import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import ListItemText from "@material-ui/core/ListItemText";
 import { withStyles } from "@material-ui/core/styles";
-import moment from 'moment'
+
 
 const styles = (theme) => ({
   cardComponent: {
@@ -84,7 +84,7 @@ const Filters = (props) => {
 
          const dateChangeHandler=(e,type)=>{
            const releaseDate=e.target.value;
-           const convertedReleaseDate =new Date(releaseDate);
+           
            console.log(releaseDate)
            type==="startdate"?setReleaseDateStart(releaseDate):setReleaseDateEnd(releaseDate);
 

@@ -18,7 +18,7 @@ const Home = (props) => {
     useEffect(() =>{
     async function fetchData() {
     const response = await fetch(
-      "http://localhost:8085/api/v1/movies"
+      `${props.baseUrl}movies`
     );
     const json = await response.json();
     data = await json.movies;
@@ -26,6 +26,7 @@ const Home = (props) => {
     setReleasedPoster(data);
    }
    fetchData();
+   
    },[]);
 
              async function fetchFilterData(filterURL) {
@@ -41,7 +42,9 @@ const Home = (props) => {
           }
 
    const movieDetailsHandler=(e,details={...props})=>{
-     props.history.push("/movie/" + details.id,details);
+     console.log("details",details);
+     props.history.push("/movie/" + details.id,
+      details);
 
    }
    
@@ -50,12 +53,12 @@ const Home = (props) => {
       <Header hideBookShow={true} {...props} />
       <h3>Upcoming Movies</h3>
 
-      <GridList cols={6} cellHeight="250">
+      <GridList cols={6} cellHeight={250} >
         <Grid
           item
-          container
-          xs={12}
-          style={{ display: "flex", flexDirection: "column" }}
+
+          style={{ display: "flex", flexDirection: "row" }}
+          
         >
           {upcomingPoster.map((movie) => (
             <GridListTile
@@ -78,7 +81,7 @@ const Home = (props) => {
       </GridList>
       <div style={{ width: "100%", display: "flex" }}>
         <div style={{ width: "76%", margin: "16px" }}>
-          <GridList cellHeight="350" cols={4}>
+          <GridList cellHeight={350} cols={4}>
             {releasedPoster
               .filter((s) => (s.status === "RELEASED"))
               .map((movie) => (

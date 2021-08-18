@@ -2,7 +2,6 @@ import React from 'react';
 import Header from "../../common/header/Header";
 import Typography from "@material-ui/core/Typography";
 import "./Details.css"
-import StarBorderIcon from "@material-ui/icons/StarBorder";
 import { withStyles } from "@material-ui/core/styles";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from "@material-ui/core/GridListTile";
@@ -24,10 +23,12 @@ const styles = () => ({
   }
 });
 function Details(props) {
-    console.log(props.location.state);
-    const regex = /(?<==)(\w*)/gm;
+    
+    const regex =  new RegExp(/(?<==)(\w*)/gm);
+    
     let videoId = props.location.state.trailer_url.match(regex);
-    console.log(videoId);
+    console.log("details",regex);
+    console.log("details",videoId);
   const backHomeHandler = () => {
 
     props.history.push("/")
@@ -38,14 +39,12 @@ function Details(props) {
   const opts = {
     
     playerVars: {
-      // https://developers.google.com/youtube/player_parameters
       autoplay: 0,
       
     },
   };
 
     const VideoOnReady=(e)=> {
-    // access to player in all event handlers via event.target
     e.target.pauseVideo();
     console.log(e.target);
   };
@@ -54,15 +53,16 @@ function Details(props) {
 
   return (
     <div>
-      <Header hideBookShow={false} />
+      <Header hideBookShow={false} {...props} />
       <div className="back" onClick={backHomeHandler}>
         {`< Back to Home`}
       </div>
       <div className="details">
-        <div className="left">
+        <div className="left" >
           <img
             src={props.location.state.poster_url}
             alt={props.location.state.title}
+            className="imgwidth"
           />
         </div>
         <div className="middle">
@@ -100,7 +100,7 @@ function Details(props) {
             <strong>Rate this movie:</strong>
           </Typography>
 
-          <Typography style={{width:"120px"}}>
+          <Typography component={'span'} style={{width:"120px"}}>
             <StarRating />
           </Typography>
           <Typography className={classes.artistMargin}>
@@ -108,7 +108,7 @@ function Details(props) {
           </Typography>
 
           <GridList cols={2}>
-            {props.location.state.artists.map((artist) => (
+            {props.location.state.artists?props.location.state.artists.map((artist) => (
               <GridListTile key={artist.id} style={{ padding: "10px" }}>
                 <img
                   margin="auto"
@@ -119,7 +119,7 @@ function Details(props) {
                   title={`${artist.first_name} ${artist.last_name}`}
                 />
               </GridListTile>
-            ))}
+            )):null}
           </GridList>
         </div>
       </div>

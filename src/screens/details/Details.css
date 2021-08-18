@@ -14,6 +14,7 @@
     
     width: 20%;
     margin-left: 24px;
+    
 }
 
 .middle{
@@ -24,5 +25,7 @@
     width: 20%;
     
 }
-
+.imgwidth{
+    max-width: 100%;
+}
 

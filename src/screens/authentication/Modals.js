@@ -1,7 +1,5 @@
 import React,{useState,useEffect} from 'react';
 import Modal from 'react-modal'
-import Login from './Login'
-import Register from './Register'
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
@@ -68,10 +66,10 @@ useEffect(() => {console.log(props.modalState);
         </Tabs>
 
         <TabPanel value={value} index={0}>
-          <Login />
+          {props.login}
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <Register />
+          {props.register}
         </TabPanel>
       </Modal>
     );
