@@ -19,6 +19,9 @@ const styles = () => ({
     flexWrap: 'nowrap',
     transform: 'translateZ(0)',
   },
+    gridTile: {
+    padding: "10px",
+    },
 
   });
 const Home = (props) => {
@@ -69,8 +72,6 @@ const Home = (props) => {
               onClick={(e) => movieDetailsHandler(e, movie)}
             >
               <img
-                margin="auto"
-                height="250px"
                 src={movie.poster_url}
                 alt={movie.title}
               />
@@ -79,18 +80,18 @@ const Home = (props) => {
           ))}
       </GridList>
       </div>
-      <div style={{ width: "100%", display: "flex" }}>
-        <div style={{ width: "76%", margin: "16px" }}>
+      <div className="bottom">
+        <div className="released margin">
           <GridList cellHeight={350} cols={4}>
             {releasedPoster
               .filter((s) => (s.status === "RELEASED"))
               .map((movie) => (
                 <GridListTile
                   key={movie.id}
-                  style={{ padding: "10px" }}
+                  className={classes.gridTile}
                   onClick={(e) => movieDetailsHandler(e, movie)}
                 >
-                  <img margin="auto" src={movie.poster_url}  alt={movie.title} />
+                  <img src={movie.poster_url} alt={movie.title} />
                   <GridListTileBar
                     title={movie.title}
                     subtitle={
@@ -104,7 +105,7 @@ const Home = (props) => {
               ))}
           </GridList>
         </div>
-        <div style={{ width: "24%", margin: "16px" }}>
+        <div className="filter margin">
           <Filters handleFilter={fetchFilterData}/>
         </div>
       </div>
