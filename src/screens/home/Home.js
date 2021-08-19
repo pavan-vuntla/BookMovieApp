@@ -26,6 +26,7 @@ const Home = (props) => {
     setReleasedPoster(data);
    }
    fetchData();
+   console.log("home",props);
    
    },[]);
 
@@ -36,12 +37,10 @@ const Home = (props) => {
              );
              const json = await response.json();
              data = await json.movies;
-             setReleasedPoster(data);
-             
-            
+             setReleasedPoster(data); 
           }
 
-   const movieDetailsHandler=(e,details={...props})=>{
+   const movieDetailsHandler=(e,details)=>{
      console.log("details",details);
      props.history.push("/movie/" + details.id,
       details);
@@ -90,7 +89,7 @@ const Home = (props) => {
                   style={{ padding: "10px" }}
                   onClick={(e) => movieDetailsHandler(e, movie)}
                 >
-                  <img margin="auto" src={movie.poster_url} alt={movie.title} />
+                  <img margin="auto" src={movie.poster_url}  alt={movie.title} />
                   <GridListTileBar
                     title={movie.title}
                     subtitle={

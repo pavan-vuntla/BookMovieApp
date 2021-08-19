@@ -53,7 +53,7 @@ function Details(props) {
 
   return (
     <div>
-      <Header hideBookShow={false} {...props} />
+      <Header hideBookShow={false} />
       <div className="back" onClick={backHomeHandler}>
         {`< Back to Home`}
       </div>

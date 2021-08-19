@@ -1,12 +1,11 @@
 import React from "react";
-import { BrowserRouter as Router} from "react-router-dom";
-import {Switch} from "react-router-dom";
-import {Route } from "react-router-dom";
+import { BrowserRouter as Router,Route, Switch} from "react-router-dom";
 import Home from './home/Home';
 import BookShow from './bookshow/BookShow';
 import Confirmation from './confirmation/Confirmation';
 import Details from "./details/Details";
 const baseUrl="http://localhost:8085/api/v1/";
+
 const Controller = () => {
     return (
         <Router>

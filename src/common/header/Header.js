@@ -15,6 +15,7 @@ const styles = () => ({
 });
 
 const Header = (props) => {
+  console.log("header",props);
   const [openModal, setOpenModal] = useState(false);
   const accessToken = sessionStorage.getItem("access-token");
   const loginHandler = () => {
@@ -23,7 +24,6 @@ const Header = (props) => {
   
   const bookShowHandler = () => {
     if(accessToken){
-      console.log("header",props)
         props.history.push({pathname:`/bookshow/${props.match.params.id}`,state:props.location.state});
     }
     else{
@@ -73,7 +73,7 @@ const Header = (props) => {
           </Button>
           }
 
-          <Modals login={<Login handleModal={updateModalHandler}/>} register={<Register />} handleModal={updateModalHandler} modalState={openModal} />
+          <Modals login={<Login handleModal={updateModalHandler} baseUrl={props.baseUrl}/>} register={<Register baseUrl={props.baseUrl}/>} handleModal={updateModalHandler} modalState={openModal} />
         </div>
       </div>
     </div>

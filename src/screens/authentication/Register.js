@@ -52,7 +52,7 @@ const Register = (props) => {
         mobile_number: contact,
         password: password});
 
-        fetch("http://localhost:8085/api/v1/signup", {
+        fetch(`${props.baseUrl}signup`, {
            method: "POST",
            headers: {
               "Content-Type": "application/json;charset=UTF-8",

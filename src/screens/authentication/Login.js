@@ -16,7 +16,7 @@ const styles = () => ({
 
 
 
-const  Login =(props)=>{
+  const  Login =(props)=>{
   const [userName,setUserName]=useState('');
   const [password, setPassword] = useState("");
   const [reqUserName, setReqUserName] = useState("dispNone");
@@ -27,11 +27,11 @@ const  Login =(props)=>{
     userName === "" ? setReqUserName("dispBlock") : setReqUserName("dispNone");
     password === "" ? setReqPassword("dispBlock") : setReqPassword("dispNone");
     const accessToken=window.btoa(`${userName}:${password}`);
-    console.log(accessToken);
+    console.log("login",props.baseUrl);
     //sessionStorage.setItem("access-token",accessToken);
     
 
-        fetch("http://localhost:8085/api/v1/auth/login", {
+        fetch(`${props.baseUrl}auth/login`, {
            method: "POST",
            headers: {
               "Content-Type": "application/json;charset=UTF-8",
