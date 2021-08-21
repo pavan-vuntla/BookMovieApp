@@ -1,7 +1,6 @@
 import React,{useEffect, useState} from "react";
 import Header from "../../common/header/Header";
 import { withStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
 import GridList from "@material-ui/core/GridList";
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from "@material-ui/core/GridListTileBar";
@@ -31,7 +30,7 @@ const Home = (props) => {
     useEffect(() =>{
     async function fetchData() {
     const response = await fetch(
-      `${props.baseUrl}movies`
+      `${props.baseUrl}movies?limit=100`
     );
     const json = await response.json();
     data = await json.movies;
@@ -66,10 +65,10 @@ const Home = (props) => {
       <h3>Upcoming Movies</h3>
       <div className={classes.root}>
       <GridList className={classes.gridList} cols={6} cellHeight={250} >
-          {upcomingPoster.map((movie) => (
+          {upcomingPoster.filter((s) => (s.status === "PUBLISHED"))
+          .map((movie) => (
             <GridListTile
               key={movie.id}
-              onClick={(e) => movieDetailsHandler(e, movie)}
             >
               <img
                 src={movie.poster_url}

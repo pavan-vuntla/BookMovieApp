@@ -17,13 +17,14 @@ const styles = () => ({
 const Header = (props) => {
   console.log("header",props);
   const [openModal, setOpenModal] = useState(false);
-  const accessToken = sessionStorage.getItem("access-token");
+  const accessToken = sessionStorage.getItem("accesstoken");
   const loginHandler = () => {
     setOpenModal(true);
   };
   
   const bookShowHandler = () => {
     if(accessToken){
+      console.log(props);
         props.history.push({pathname:`/bookshow/${props.match.params.id}`,state:props.location.state});
     }
     else{

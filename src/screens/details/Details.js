@@ -20,14 +20,18 @@
     artistMargin:{
         marginTop:"16px",
         marginBottom:"16px"
+    },
+    ratingWidth:{
+        width:"120px"
     }
   });
   function Details(props) {
+    console.log(props)
       
-      const regex =  new RegExp(/(?<==)(\w*)/gm);
+      //const regex =  new RegExp(/(?<==)(\w*)/gm);
       
-      let videoId = props.location.state.trailer_url.match(regex);
-      console.log("details",regex);
+      //let videoId = props.location.state.trailer_url.match(regex);
+      const videoId = props.location.state.trailer_url.split("=").pop();
       console.log("details",videoId);
       const backHomeHandler = () => {
           props.history.push("/")
@@ -53,7 +57,7 @@
 
     return (
       <div>
-        <Header hideBookShow={false} />
+        <Header hideBookShow={false} baseUrl={props.baseUrl} history={props.history} match={props.match} location={props.location}/>
         <div className="back" onClick={backHomeHandler}>
           {`< Back to Home`}
         </div>
@@ -93,14 +97,14 @@
             <Typography className={classes.marginTop16}>
               <strong>Trailer: </strong>
             </Typography>
-            <YouTube videoId={videoId[0]} opts={opts} host= 'http://www.youtube.com' onReady={VideoOnReady} />;
+            <YouTube videoId={videoId} opts={opts} host= 'http://www.youtube.com' onReady={VideoOnReady} />;
           </div>
           <div className="right">
             <Typography>
               <strong>Rate this movie:</strong>
             </Typography>
 
-            <Typography component={'span'} style={{width:"120px"}}>
+            <Typography component={'span'} className={classes.ratingWidth}>
               <StarRating />
             </Typography>
             <Typography className={classes.artistMargin}>
@@ -109,7 +113,7 @@
             {props.location.state.artists?
             <GridList cols={2}>
               {props.location.state.artists.map((artist) => (
-                <GridListTile key={artist.id} style={{ padding: "10px" }}>
+                <GridListTile key={artist.id} >
                   <img
                     margin="auto"
                     src={artist.profile_url}

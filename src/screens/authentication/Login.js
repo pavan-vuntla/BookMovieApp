@@ -38,6 +38,7 @@ const styles = () => ({
               accept: "application/json",
               Authorization: "Basic "+accessToken, 
               "Cache-Control": "no-cache",
+              "Access-Control-Allow-Origin": "*",
               "access-control-expose-headers": "access-token"
            },
            }).then((response) => {
@@ -47,7 +48,7 @@ const styles = () => ({
       .then((data) => {
         if(!data.code){
           console.log(data.headers)
-          sessionStorage.setItem("access-token","uuuu");
+          sessionStorage.setItem("accesstoken","uuuu");
           props.handleModal();
           
         }

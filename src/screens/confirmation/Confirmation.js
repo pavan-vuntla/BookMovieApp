@@ -48,6 +48,7 @@ const Confirmation = (props) => {
       show_id: props.location.bookingSummary.showId,
       tickets: [props.location.bookingSummary.tickets.toString()],
     });
+    console.log("confirmation",sessionStorage.getItem("access-token"));
 
     fetch(props.baseUrl + "bookings", {
       method: "POST",
