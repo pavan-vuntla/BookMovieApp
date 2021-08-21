@@ -6,6 +6,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Modals from '../../screens/authentication/Modals';
 import Login from '../../screens/authentication/Login'
 import Register from '../../screens/authentication/Register'
+import axios from 'axios';
 
 
 const styles = () => ({
@@ -17,28 +18,49 @@ const styles = () => ({
 const Header = (props) => {
   console.log("header",props);
   const [openModal, setOpenModal] = useState(false);
-  const accessToken = sessionStorage.getItem("accesstoken");
+  const [accessToken,setAccessToken] = useState(false);
+  //const accessToken = sessionStorage.getItem("access-token");
   const loginHandler = () => {
     setOpenModal(true);
   };
   
   const bookShowHandler = () => {
     if(accessToken){
-      console.log(props);
-        props.history.push({pathname:`/bookshow/${props.match.params.id}`,state:props.location.state});
+      props.history.push({pathname:`/bookshow/${props.match.params.id}`,state:props.location.state});
     }
     else{
       setOpenModal(true);
     }
-    
   };
-
   const updateModalHandler=()=>{
     setOpenModal(false);
   }
 
+  const toggleButtonHandler=()=>{
+      setAccessToken(true);
+  }
     const logoutHandler =()=>{
-
+      axios({
+        method: 'post',
+        url: `${props.baseUrl}auth/logout`,
+        headers: {
+              "Content-Type": "application/json;charset=UTF-8",
+              accept: "application/json",
+              Authorization: "Bearer " + sessionStorage.getItem("access-token"), 
+              "Cache-Control": "no-cache",
+              "Access-Control-Allow-Origin": "*",
+            },
+            }).then((response) => {
+                      console.log(response.headers);
+                      console.log(response.status);
+                        sessionStorage.removeItem("access-token");
+                        setAccessToken(false);
+                        
+                        }).catch(function (error) {
+                //handle error
+                console.log(error.response.status);
+                console.log(error.response.data);
+              });
   }
   const { classes } = props;
 
@@ -74,7 +96,7 @@ const Header = (props) => {
           </Button>
           }
 
-          <Modals login={<Login handleModal={updateModalHandler} baseUrl={props.baseUrl}/>} register={<Register baseUrl={props.baseUrl}/>} handleModal={updateModalHandler} modalState={openModal} />
+          <Modals login={<Login handleModal={updateModalHandler} baseUrl={props.baseUrl} buttonNameChange={toggleButtonHandler}/>} register={<Register baseUrl={props.baseUrl}/>} handleModal={updateModalHandler} modalState={openModal} />
         </div>
       </div>
     </div>

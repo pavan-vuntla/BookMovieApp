@@ -5,65 +5,82 @@ import InputLabel from "@material-ui/core/InputLabel";
 import Input from "@material-ui/core/Input";
 import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
+import axios from 'axios';
 
 const styles = () => ({
   alignItem: {
-     display: "flex",
+    display: "flex",
     alignItems: "center",
     flexDirection: "column",
   }
 });
 
-
-
-  const  Login =(props)=>{
-  const [userName,setUserName]=useState('');
-  const [password, setPassword] = useState("");
-  const [reqUserName, setReqUserName] = useState("dispNone");
-  const [reqPassword, setReqPassword] = useState("dispNone");
-  const { classes } = props;
-  const loginHandler=()=>{
+const  Login =(props)=>{
+const [userName,setUserName]=useState('');
+const [password, setPassword] = useState("");
+const [reqUserName, setReqUserName] = useState("dispNone");
+const [reqPassword, setReqPassword] = useState("dispNone");
+const { classes } = props;
+const loginHandler=()=>{
     
-    userName === "" ? setReqUserName("dispBlock") : setReqUserName("dispNone");
-    password === "" ? setReqPassword("dispBlock") : setReqPassword("dispNone");
-    const accessToken=window.btoa(`${userName}:${password}`);
-    console.log("login",props.baseUrl);
-    //sessionStorage.setItem("access-token",accessToken);
-    
+  userName === "" ? setReqUserName("dispBlock") : setReqUserName("dispNone");
+  password === "" ? setReqPassword("dispBlock") : setReqPassword("dispNone");
+  const accessToken=window.btoa(`${userName}:${password}`);
+  console.log("login",props.baseUrl);
 
-        fetch(`${props.baseUrl}auth/login`, {
-           method: "POST",
-           headers: {
-              "Content-Type": "application/json;charset=UTF-8",
-              accept: "application/json",
-              Authorization: "Basic "+accessToken, 
-              "Cache-Control": "no-cache",
-              "Access-Control-Allow-Origin": "*",
-              "access-control-expose-headers": "access-token"
-           },
-           }).then((response) => {
-                console.log(response.headers);
-                return response.json() 
-                  })
-      .then((data) => {
-        if(!data.code){
-          console.log(data.headers)
-          sessionStorage.setItem("accesstoken","uuuu");
-          props.handleModal();
-          
-        }
-        console.log(sessionStorage.getItem("access-token"));
-      });
+  axios({
+  method: 'post',
+  url: `${props.baseUrl}auth/login`,
+  headers: {
+        "Content-Type": "application/json;charset=UTF-8",
+        accept: "application/json",
+        Authorization: "Basic "+accessToken, 
+        "Cache-Control": "no-cache",
+        "Access-Control-Allow-Origin": "*",
+        "access-control-expose-headers": "access-token"
+      },
+}).then((response) => {
+          console.log(response.headers["access-token"]);
+          console.log(response.data);
+            sessionStorage.setItem("access-token",response.headers["access-token"]);
+            props.handleModal();
+            props.buttonNameChange();
+            }).catch(function (error) {
+    //handle error
+    console.log(error.response.status);
+    console.log(error.response.data);
+  });
+
+//   fetch(`${props.baseUrl}auth/login`, {
+//       method: "POST",
+//       headers: {
+//         "Content-Type": "application/json;charset=UTF-8",
+//         accept: "application/json",
+//         Authorization: "Basic "+accessToken, 
+//         "Cache-Control": "no-cache",
+//         "Access-Control-Allow-Origin": "*",
+//         "access-control-expose-headers": "access-token"
+//       },
+//       }).then((response) => {
+//           console.log(response.headers);
+//           return response.json() 
+//             })
+// .then((data) => {
+//   if(!data.code){
+//     console.log(data.headers)
+//     sessionStorage.setItem("accesstoken","uuuu");
+//     props.handleModal();  
+//   }
+//   console.log(sessionStorage.getItem("access-token"));
+// });
+}
+const changeHandler = (e,input) => {
+  if(input==="username"){
+    setUserName(e.target.value);
   }
-  
-
-  const changeHandler = (e,input) => {
-    if(input==="username"){
-      setUserName(e.target.value);
-    }
-    if(input==="password"){
-     setPassword(e.target.value);
-    }
+  if(input==="password"){
+    setPassword(e.target.value);
+  }
   };
     return (
       <div className={classes.alignItem}>

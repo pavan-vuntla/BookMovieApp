@@ -26,16 +26,11 @@
     }
   });
   function Details(props) {
-    console.log(props)
-      
-      //const regex =  new RegExp(/(?<==)(\w*)/gm);
-      
-      //let videoId = props.location.state.trailer_url.match(regex);
-      const videoId = props.location.state.trailer_url.split("=").pop();
-      console.log("details",videoId);
-      const backHomeHandler = () => {
-          props.history.push("/")
-          };
+    const videoId = props.location.state.trailer_url.split("=").pop();
+    console.log("details",videoId);
+    const backHomeHandler = () => {
+        props.history.push("/")
+        };
 
   const { classes } = props;
 
@@ -52,8 +47,6 @@
       e.target.pauseVideo();
       console.log("Video",e.target);
     };
-
-
 
     return (
       <div>
