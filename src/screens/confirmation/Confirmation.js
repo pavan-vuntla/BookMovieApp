@@ -42,8 +42,6 @@ const Confirmation = (props) => {
     setOriginalTotalPrice(price);
   }, []);
 
-      console.log("Con",props);
-
   const confirmBookingHandler = () => {
     let data = JSON.stringify({
       coupon_code: couponCode,
@@ -102,7 +100,7 @@ const Confirmation = (props) => {
 
   return (
     <div className="Details">
-      <Header baseUrl={props.baseUrl}/>
+      <Header baseUrl={props.baseUrl} />
 
       <div className="confirmation marginTop16">
         <div>

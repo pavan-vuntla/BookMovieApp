@@ -1,25 +1,28 @@
-h3{
-    background-color:#ff9999;
-    padding: 8px;
-    text-align: center;
-    font-size: 1rem;
-    margin: auto;
+h3 {
+  background-color: #ff9999;
+  padding: 8px;
+  text-align: center;
+  font-size: 1rem;
+  margin: auto;
 }
 
-.margin{
-    margin:16px
+.margin {
+  margin: 16px;
 }
 
-.released{
-    width: 76%
+.released {
+  width: 76%;
 }
 
-.filter{
-    width: 24%
+.filter {
+  width: 24%;
 }
 
-.bottom{
-    width: 100%; 
-    display: flex
+.bottom {
+  width: 100%;
+  display: flex;
 }
 
+.moviesImg {
+  cursor: pointer;
+}
