@@ -25,7 +25,7 @@ const Home = (props) => {
   const [releasedPoster, setReleasedPoster] = useState([]);
   useEffect(() => {
     async function fetchData() {
-      const response = await fetch(`${props.baseUrl}movies?limit=100`);
+      const response = await fetch(`${props.baseUrl}movies?limit=1000`);
       const json = await response.json();
       data = await json.movies;
       setUpcomingPoster(data);

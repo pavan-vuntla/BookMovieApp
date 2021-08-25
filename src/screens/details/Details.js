@@ -23,6 +23,13 @@ const styles = () => ({
   ratingWidth: {
     width: "120px",
   },
+  back: {
+    marginLeft: "24px",
+    marginTop: "8px",
+    marginBottom: "0px",
+    height: "24px",
+    cursor: "pointer",
+  },
 });
 function Details(props) {
   const currentState = props.location.state;
@@ -54,9 +61,13 @@ function Details(props) {
         match={props.match}
         location={props.location}
       />
-      <div className="back" onClick={backHomeHandler}>
+      <Typography
+        component="div"
+        className={classes.back}
+        onClick={backHomeHandler}
+      >
         {`< Back to Home`}
-      </div>
+      </Typography>
       <div className="details">
         <div className="left">
           <img
