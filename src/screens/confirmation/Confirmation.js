@@ -42,13 +42,14 @@ const Confirmation = (props) => {
     setOriginalTotalPrice(price);
   }, []);
 
+      console.log("Con",props);
+
   const confirmBookingHandler = () => {
     let data = JSON.stringify({
       coupon_code: couponCode,
       show_id: props.location.bookingSummary.showId,
       tickets: [props.location.bookingSummary.tickets.toString()],
     });
-    console.log("confirmation",sessionStorage.getItem("access-token"));
 
     fetch(props.baseUrl + "bookings", {
       method: "POST",
@@ -101,7 +102,7 @@ const Confirmation = (props) => {
 
   return (
     <div className="Details">
-      <Header />
+      <Header baseUrl={props.baseUrl}/>
 
       <div className="confirmation marginTop16">
         <div>

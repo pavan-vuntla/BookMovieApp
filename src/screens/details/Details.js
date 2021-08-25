@@ -26,7 +26,8 @@
     }
   });
   function Details(props) {
-    const videoId = props.location.state.trailer_url.split("=").pop();
+    const currentState = props.location.state;
+    const videoId = currentState.trailer_url.split("=").pop();
     console.log("details",videoId);
     const backHomeHandler = () => {
         props.history.push("/")
@@ -38,7 +39,7 @@
       
       playerVars: {
         autoplay: 0,
-        'origin': 'http://localhost:3000',
+        origin:"http://www.localhost:3000/"
         
       },
     };

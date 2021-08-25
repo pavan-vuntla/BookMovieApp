@@ -1,9 +1,9 @@
-.red{
-    color: red;
+.red {
+  color: red;
 }
 
-.alignItems{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+.alignItems {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
