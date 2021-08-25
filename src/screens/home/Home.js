@@ -18,6 +18,10 @@ const styles = () => ({
     flexWrap: "nowrap",
     transform: "translateZ(0)",
   },
+  gridListMain: {
+    transform: "translateZ(0)",
+    cursor: "pointer",
+  },
 });
 const Home = (props) => {
   let data = [];
@@ -51,12 +55,16 @@ const Home = (props) => {
       <Header hideBookShow={true} baseUrl={props.baseUrl} />
       <h3>Upcoming Movies</h3>
       <div className={classes.root}>
-        <GridList className={classes.gridList} cols={6}>
+        <GridList className={classes.gridList} cols={6} cellHeight={250}>
           {upcomingPoster
             .filter((s) => s.status === "PUBLISHED")
             .map((movie) => (
-              <GridListTile key={movie.id} style={{ height: "250px" }}>
-                <img src={movie.poster_url} alt={movie.title} />
+              <GridListTile key={movie.id}>
+                <img
+                  src={movie.poster_url}
+                  alt={movie.title}
+                  className="movie-poster"
+                />
                 <GridListTileBar title={movie.title} />
               </GridListTile>
             ))}
@@ -64,14 +72,14 @@ const Home = (props) => {
       </div>
       <div className="bottom">
         <div className="released margin">
-          <GridList cols={4}>
+          <GridList cols={4} cellHeight={350} className={classes.gridListMain}>
             {releasedPoster
               .filter((s) => s.status === "RELEASED")
               .map((movie) => (
                 <GridListTile
-                  style={{ height: "350px", padding: "15px" }}
                   key={movie.id}
                   onClick={(e) => movieDetailsHandler(e, movie)}
+                  className="released-movie-grid-item"
                 >
                   <img
                     src={movie.poster_url}
