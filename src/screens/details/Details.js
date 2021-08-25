@@ -71,35 +71,35 @@ function Details(props) {
       <div className="details">
         <div className="left">
           <img
-            src={props.location.state.poster_url}
-            alt={props.location.state.title}
+            src={currentState.poster_url}
+            alt={currentState.title}
             className="imgwidth"
           />
         </div>
         <div className="middle">
           <Typography variant="headline" component="h2">
-            {props.location.state.title}
+            {currentState.title}
           </Typography>
           <Typography>
             <strong>Genre: </strong>
-            {props.location.state.genres.join(",")}
+            {currentState.genres.join(",")}
           </Typography>
           <Typography>
             <strong>Duration: </strong>
-            {props.location.state.duration}
+            {currentState.duration}
           </Typography>
           <Typography>
             <strong>Release Date: </strong>
-            {new Date(props.location.state.release_date).toDateString()}
+            {new Date(currentState.release_date).toDateString()}
           </Typography>
           <Typography>
             <strong>Rating: </strong>
-            {props.location.state.rating}
+            {currentState.rating}
           </Typography>
           <Typography className={classes.marginTop16}>
             <strong>Plot: </strong>(
-            <a href={props.location.state.wiki_url}>Wiki Link</a>)
-            {props.location.state.storyline}
+            <a href={currentState.wiki_url}>Wiki Link</a>)
+            {currentState.storyline}
           </Typography>
           <Typography className={classes.marginTop16}>
             <strong>Trailer: </strong>
@@ -123,9 +123,9 @@ function Details(props) {
           <Typography className={classes.artistMargin}>
             <strong>Artists:</strong>
           </Typography>
-          {props.location.state.artists ? (
+          {currentState.artists ? (
             <GridList cols={2}>
-              {props.location.state.artists.map((artist) => (
+              {currentState.artists.map((artist) => (
                 <GridListTile key={artist.id}>
                   <img
                     margin="auto"
